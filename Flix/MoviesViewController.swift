@@ -20,6 +20,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
+        // Initialize a UIRefreshControl
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControl.Event.valueChanged)
+        
+        tableView.insertSubview(refreshControl, at: 0)
+        
         // Do any additional setup after loading the view.
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -34,15 +40,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             self.movies = dataDictionary["results"] as! [[String:Any]]
             
             //Updates app so that tableView isn't 0 (calls tableView funcs again)
-            //Currently not working?
             self.tableView.reloadData()
             
             print(dataDictionary)
-
-              // TODO: Get the array of movies
-              // TODO: Store the movies in a property to use elsewhere
-              // TODO: Reload your table view data
-
            }
         }
         task.resume()
@@ -75,5 +75,35 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
+    // Makes a network request to get updated data
+    // Updates the tableView with the new data
+    // Hides the RefreshControl
+    @objc private func refreshControlAction(_ refreshControl: UIRefreshControl) {
+
+        // Create the URLRequest 'request'
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+
+        // Configure session so that completion handler is executed on main UI thread
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            // This will run when the network request returns
+            if let error = error {
+               print(error.localizedDescription)
+            } else if let data = data {
+               let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                
+            //Use the new data to update the data source
+            self.movies = dataDictionary["results"] as! [[String:Any]]
+
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
+
+            // Tell the refreshControl to stop spinning
+            refreshControl.endRefreshing()
+            }
+        }
+        task.resume()
+    }
 
 }
