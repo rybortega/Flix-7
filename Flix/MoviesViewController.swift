@@ -23,7 +23,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         // Initialize a UIRefreshControl
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControl.Event.valueChanged)
-        
+        //Bind control
         tableView.insertSubview(refreshControl, at: 0)
         
         // Do any additional setup after loading the view.
@@ -65,12 +65,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let baseUrl = "https://image.tmdb.org/t/p/w185"
         let posterPath = movie["poster_path"] as! String
         let posterUrl = URL(string: baseUrl + posterPath)
+        cell.posterImage.af_setImage(withURL: posterUrl!)
         
         //cell.textLabel!.text = title
         cell.titleLabel.text = title
         cell.detailLabel.text = detail
-        
-        cell.posterImage.af_setImage(withURL: posterUrl!)
         
         return cell
     }
@@ -104,6 +103,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         task.resume()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Segueing to movie details")
+        
+        let cell = sender as! MovieCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        //Passes information to MovieDetailsViewController
+        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
+        movieDetailsViewController.movie = movie
+        
+        //De-highlights selected row
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }
