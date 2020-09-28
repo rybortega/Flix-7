@@ -68,8 +68,8 @@ class MovieGridViewController: UIViewController, UICollectionViewDataSource, UIC
         let movie = movies[indexPath.item]
         
         //Passes information to MovieDetailsViewController
-        let movieGridDetailsViewController = segue.destination as! MovieGridDetailsViewController
-        movieGridDetailsViewController.movie = movie
+        let movieDetailsViewController = segue.destination as! MovieDetailsViewController
+        movieDetailsViewController.movie = movie
     }
 
     @objc private func refreshControlAction(_ refreshControl: UIRefreshControl){
@@ -81,9 +81,11 @@ class MovieGridViewController: UIViewController, UICollectionViewDataSource, UIC
     
     //Networking
     func retrieveAPI(){
+        // Movie id examples:
         // Wonder Woman id = 297762
         // Onward id = 508439
         // Antebellum id = 627290
+        
         let url = URL(string: "https://api.themoviedb.org/3/movie/297762/similar?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
 

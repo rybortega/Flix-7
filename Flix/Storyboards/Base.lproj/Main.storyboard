@@ -94,13 +94,17 @@
         <!--Movie Details View Controller-->
         <scene sceneID="o9A-kY-D7a">
             <objects>
-                <viewController id="A8X-Hh-MAx" customClass="MovieDetailsViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetailsViewController" id="A8X-Hh-MAx" customClass="MovieDetailsViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qee-Aa-vHz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GlD-oU-I6a">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GlD-oU-I6a">
                                 <rect key="frame" x="0.0" y="88" width="414" height="240"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="FZ4-Z3-QXq" appends="YES" id="vFP-bq-Eax"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="he1-aR-omP">
                                 <rect key="frame" x="130" y="337" width="246" height="25"/>
@@ -139,11 +143,43 @@
                         <outlet property="detailLabel" destination="baB-yD-mav" id="Bcc-zy-006"/>
                         <outlet property="posterImage" destination="uOl-lA-noW" id="NI7-Ay-esY"/>
                         <outlet property="titleLabel" destination="he1-aR-omP" id="dDH-C2-YhY"/>
+                        <segue destination="fnu-l2-nuL" kind="presentation" identifier="trailerSegue" id="p14-gR-m8t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ev-Dp-kcF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="FZ4-Z3-QXq">
+                    <connections>
+                        <action selector="didTapBackdrop:" destination="A8X-Hh-MAx" id="NuV-AI-83s"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-671" y="1417"/>
+            <point key="canvasLocation" x="-241" y="1491"/>
+        </scene>
+        <!--Trailer View Controller-->
+        <scene sceneID="F6X-vW-Gij">
+            <objects>
+                <viewController id="fnu-l2-nuL" customClass="TrailerViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b8c-m4-x7J">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y1g-Xe-6rR">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Au3-zz-ApK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YVJ-xs-iZr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-242" y="2167"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="497-DQ-Dof">
@@ -167,7 +203,7 @@
         <scene sceneID="SwN-wU-QMN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JKZ-z5-hce" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="Poq-Ws-9Ub"/>
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="now_playing_tabbar_item" id="Poq-Ws-9Ub"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vbv-n6-LEm">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -218,7 +254,7 @@
                                         <size key="customSize" width="197" height="225"/>
                                         <connections>
                                             <outlet property="posterImage" destination="8h7-lU-Xwj" id="Ql9-ue-GaI"/>
-                                            <segue destination="cxW-tT-J6G" kind="show" id="sBR-dX-bbo"/>
+                                            <segue destination="A8X-Hh-MAx" kind="show" id="s0Y-Be-6KX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -235,65 +271,11 @@
             </objects>
             <point key="canvasLocation" x="179.71014492753625" y="743.97321428571422"/>
         </scene>
-        <!--Movie Grid Details View Controller-->
-        <scene sceneID="qDt-CK-dsB">
-            <objects>
-                <viewController id="cxW-tT-J6G" customClass="MovieGridDetailsViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="S6H-aV-MIz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqk-kl-ngQ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="240"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1yn-Wd-e76">
-                                <rect key="frame" x="10" y="250" width="110" height="153"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLc-Xf-DUh">
-                                <rect key="frame" x="130" y="337" width="264" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
-                                <color key="textColor" systemColor="secondarySystemGroupedBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9d3-Ks-Dlv">
-                                <rect key="frame" x="20" y="425" width="375" height="170"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="secondarySystemBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="JNo-Rw-STl"/>
-                        <color key="backgroundColor" systemColor="labelColor"/>
-                        <constraints>
-                            <constraint firstItem="dqk-kl-ngQ" firstAttribute="top" secondItem="JNo-Rw-STl" secondAttribute="top" id="DXp-Kf-gxh"/>
-                            <constraint firstItem="LLc-Xf-DUh" firstAttribute="top" secondItem="dqk-kl-ngQ" secondAttribute="bottom" constant="9" id="H7H-aL-HXg"/>
-                            <constraint firstItem="dqk-kl-ngQ" firstAttribute="trailing" secondItem="JNo-Rw-STl" secondAttribute="trailing" id="aIx-3D-DCc"/>
-                            <constraint firstItem="9d3-Ks-Dlv" firstAttribute="leading" secondItem="JNo-Rw-STl" secondAttribute="leading" constant="20" id="ieh-1G-GAh"/>
-                            <constraint firstItem="1yn-Wd-e76" firstAttribute="top" secondItem="JNo-Rw-STl" secondAttribute="top" constant="162" id="jRi-Hk-eZm"/>
-                            <constraint firstItem="9d3-Ks-Dlv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1yn-Wd-e76" secondAttribute="bottom" constant="22" id="nmK-he-BAN"/>
-                            <constraint firstItem="1yn-Wd-e76" firstAttribute="leading" secondItem="JNo-Rw-STl" secondAttribute="leading" constant="10" id="p4t-8l-IHA"/>
-                            <constraint firstItem="LLc-Xf-DUh" firstAttribute="leading" secondItem="1yn-Wd-e76" secondAttribute="trailing" constant="10" id="pYq-1q-14N"/>
-                            <constraint firstItem="dqk-kl-ngQ" firstAttribute="leading" secondItem="JNo-Rw-STl" secondAttribute="leading" id="ryB-IT-D34"/>
-                            <constraint firstItem="JNo-Rw-STl" firstAttribute="trailing" secondItem="9d3-Ks-Dlv" secondAttribute="trailing" constant="19" id="uFc-s7-mVh"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="XIz-9a-OZm"/>
-                    <connections>
-                        <outlet property="backdropImage" destination="dqk-kl-ngQ" id="TNt-Nr-1eY"/>
-                        <outlet property="detailLabel" destination="9d3-Ks-Dlv" id="vQj-TX-cdY"/>
-                        <outlet property="posterImage" destination="1yn-Wd-e76" id="Aoc-1Q-T4s"/>
-                        <outlet property="titleLabel" destination="LLc-Xf-DUh" id="fC9-dF-HxX"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OG8-2Q-6ZS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="179.71014492753625" y="1416.9642857142856"/>
-        </scene>
         <!--Superhero-->
         <scene sceneID="TFz-Kr-prW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e4E-sx-5Kw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Superhero" id="sng-lm-kj6"/>
+                    <tabBarItem key="tabBarItem" title="Superhero" image="superhero_tabbar_item" id="sng-lm-kj6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zQ1-4M-aQU">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -309,18 +291,17 @@
             <point key="canvasLocation" x="179.71014492753625" y="81.696428571428569"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="T19-zY-FIt"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="now_playing_tabbar_item" width="21" height="21"/>
+        <image name="superhero_tabbar_item" width="21" height="23"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="secondarySystemGroupedBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
