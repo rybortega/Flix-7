@@ -38,7 +38,7 @@ N/A
 
 ### App Walkthrough GIF
 
-<img src="http://g.recordit.co/aH5exHBtLX.gif" width=250><br>
+<img src="http://g.recordit.co/aH5exHBtLX." width=250><br>
 
 ### Notes
 Added pull to refresh feature
